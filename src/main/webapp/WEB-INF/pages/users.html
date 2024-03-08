@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users</title>
+</head>
+<body>
+<h1>Users</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">ID</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.lastname}">Lastname</td>
+        <td th:text="${user.email}">Email</td>
+        <td>
+            <form th:action="@{/users/{id}/update(id=${user.id})}" method="post">
+                <input type="text" name="name" th:value="${user.name}"/>
+                <input type="text" name="lastname" th:value="${user.lastname}"/>
+                <input type="text" name="email" th:value="${user.email}"/>
+                <button type="submit">Update</button>
+            </form>
+            <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/users}" method="post">
+    <input type="text" name="name" placeholder="Name"/>
+    <input type="text" name="lastname" placeholder="Lastname"/>
+    <input type="text" name="email" placeholder="Email"/>
+    <button type="submit">Add User</button>
+</form>
+</body>
+</html>

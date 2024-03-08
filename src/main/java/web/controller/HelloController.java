@@ -11,10 +11,10 @@ import web.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+//@Controller
 public class HelloController {
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/get", method = RequestMethod.GET)
 	@ResponseBody
 	public String getUser(ModelMap model) {
 		return "createMockUser()";
@@ -27,5 +27,4 @@ public class HelloController {
 		user.setMail("loookintome@gmail.com");
 		return user;
 	}
-	
-}
+*/}
