@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AllBase</title>
+    <style>
+        th.column {
+            width: 200px;
+            padding: 10px;
+        }
+        td.column {
+            width: 200px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add User</h1>
+    <form th:action="@{/adduser}" method="post">
+        <input type="text" name="name" placeholder="Name"/>
+        <input type="text" name="lastname" placeholder="Lastname"/>
+        <input type="text" name="email" placeholder="Email"/>
+        <button type="submit">Add User</button>
+    </form>
+    <h1>Users Data base</h1>
+    <table>
+        <tr>
+            <th class="column">ID</th>
+            <th class="column">Name</th>
+            <th class="column">Lastname</th>
+            <th class="column">Email</th>
+            <th class="column">Delete</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td class="column" th:text="${user.id}">ID</td>
+            <td class="column" th:text="${user.name}">Name</td>
+            <td class="column" th:text="${user.lastName}">Lastname</td>
+            <td class="column" th:text="${user.email}">Email</td>
+            <td>
+                <form th:action="@{/users/{id}/delete}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+
+            </td>
+
+        </tr>
+    </table>
+</body>
+</html>
