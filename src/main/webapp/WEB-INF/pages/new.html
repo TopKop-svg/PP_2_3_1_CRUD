@@ -17,7 +17,7 @@
 <body>
 <h1>Add User</h1>
 <form th:action="@{/add}" method="post">
-    <input type="text" name="name" placeholder="Name"/>
+    <input type="text" name="name" th:placeholder="Name"/>
     <input type="text" name="lastname" placeholder="Lastname"/>
     <input type="text" name="email" placeholder="Email"/>
     <button th:action="@{/add}" method="post" type="submit">Add User</button>
@@ -31,14 +31,21 @@
         <th class="column">Lastname</th>
         <th class="column">Email</th>
         <th class="column">Delete</th>
+        <th class="column">Change</th>
     </tr>
     <tr th:each="user : ${users}">
         <td class="column" th:text="${user.id}">ID</td>
         <td class="column" th:text="${user.name}">Name</td>
-        <td class="column" th:text="${user.lastName}">Lastname</td>
+        <td class="column" th:text="${user.lastName}">LastName</td>
         <td class="column" th:text="${user.email}">Email</td>
         <td>
             <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
+        </td>
+
+        <td>
+            <form th:action="@{/users/{id}/update/{name}/{lastname}/{email}(id=${user.id}, name=${user.name}, lastname=${user.lastName}, email=${user.email})}" method="post">
+                <button type="submit">Change</button>
+            </form>
         </td>
     </tr>
 </table>
