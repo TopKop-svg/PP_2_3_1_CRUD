@@ -27,10 +27,13 @@ public class UserController {
         return "new";
     }
 
-    /*@GetMapping("/adduser")
-    public String addUserPage(Model model) {
-        return "adduser";
-    }*/
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(@PathVariable Long id, Model model) {
+        userRepository.deleteById(id);
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "new";
+    }
 
     @PostMapping("/add")
     public String addUser(@RequestParam String name, @RequestParam String lastname
@@ -41,7 +44,6 @@ public class UserController {
         user.setEmail(email);
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
-        //RedirectView redirectView = new RedirectView("/", true);
         return "new";
     }
 
@@ -50,15 +52,4 @@ public class UserController {
         userRepository.deleteById(id);
         return "new";
     }
-
-/*
-    @PostMapping("/users/{id}/update")
-    public String updateUser(@PathVariable Long id, @RequestParam String name, @RequestParam String lastname, @RequestParam String email) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        user.setName(name);
-        user.setLastName(lastname);
-        user.setMail(email);
-        userRepository.save(user);
-        return "redirect:/index";
-    }*/
 }

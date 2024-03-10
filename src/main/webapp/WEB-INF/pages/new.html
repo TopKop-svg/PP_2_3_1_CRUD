@@ -38,9 +38,7 @@
         <td class="column" th:text="${user.lastName}">Lastname</td>
         <td class="column" th:text="${user.email}">Email</td>
         <td>
-            <form th:action="@{/users/delete/{id}}" method="post">
-                <button type="submit">Delete</button>
-            </form>
+            <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
         </td>
     </tr>
 </table>
