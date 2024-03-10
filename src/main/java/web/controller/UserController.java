@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import web.model.User;
 import web.repository.UserRepository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    @Autowired
+   @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -19,7 +20,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
+   @GetMapping("/")
     public String userTable(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
@@ -31,14 +32,17 @@ public class UserController {
         return "adduser";
     }*/
 
-    @PostMapping("adduser")
-    public String addUser(@RequestParam String name, @RequestParam String lastname, @RequestParam String email) {
+    @PostMapping("/add")
+    public String addUser(@RequestParam String name, @RequestParam String lastname
+            , @RequestParam String email, Model model) {
         User user = new User();
         user.setName(name);
         user.setLastName(lastname);
-        user.setMail(email);
+        user.setEmail(email);
         userRepository.save(user);
-        return "adduser";
+        model.addAttribute("users", userRepository.findAll());
+        //RedirectView redirectView = new RedirectView("/", true);
+        return "new";
     }
 
     @PostMapping("/users/{id}/delete")
@@ -46,6 +50,7 @@ public class UserController {
         userRepository.deleteById(id);
         return "new";
     }
+
 /*
     @PostMapping("/users/{id}/update")
     public String updateUser(@PathVariable Long id, @RequestParam String name, @RequestParam String lastname, @RequestParam String email) {

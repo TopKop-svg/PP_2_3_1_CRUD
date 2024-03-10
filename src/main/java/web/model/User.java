@@ -51,7 +51,7 @@ public class User {
         return email;
     }
 
-    public void setMail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }
