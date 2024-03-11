@@ -1,30 +1,58 @@
 package web.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import web.model.User;
+import web.repository.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 //@Controller
-public class HelloController {
+public class HelloController {}
+/*
 
-	/*@RequestMapping(value = "/get", method = RequestMethod.GET)
-	@ResponseBody
-	public String getUser(ModelMap model) {
-		return "createMockUser()";
-	}
+    private final UserRepository userRepository;
 
-	private User createMockUser() {
-		User user = new User();
-		user.setId(Long.valueOf(1));
-		user.setName("Alex");
-		user.setMail("loookintome@gmail.com");
-		return user;
-	}
-*/}
+    @Autowired
+    public HelloController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping("/")
+    public String userTable(Model model) {
+        List<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
+        return "index";
+    }
+
+    @PostMapping("/add")
+    public String addUser(@RequestParam String name, @RequestParam String lastname, @RequestParam String email, Model model) {
+        User user = new User();
+        user.setName(name);
+        user.setLastName(lastname);
+        user.setEmail(email);
+        userRepository.save(user);
+        return "redirect:/users/";
+    }
+
+    @PostMapping("/up")
+    public String upUser(@RequestParam Long id, @RequestParam String name, @RequestParam String lastname, @RequestParam String email, Model model) {
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        user.setName(name);
+        user.setLastName(lastname);
+        user.setEmail(email);
+        userRepository.save(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return "redirect:/";
+    }
+}*/

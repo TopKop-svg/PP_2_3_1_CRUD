@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+//@RequestMapping("/users")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -30,7 +31,7 @@ public class UserController {
         return "new";
     }
 
-    @PostMapping("/add")
+   @PostMapping("/add")
     public String addUser(@RequestParam String name, @RequestParam String lastname
             , @RequestParam String email, Model model) {
         User user = new User();
@@ -62,9 +63,5 @@ public class UserController {
         model.addAttribute("users", users);
         return "new";
     }
-
-
-
-
 
 }

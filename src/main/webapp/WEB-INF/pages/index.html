@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AllBase</title>
+    <style>
+        th.column {
+            width: 200px;
+            padding: 10px;
+        }
+        td.column {
+            width: 200px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Main Page</h1>
+<a href="/add">Add User</a>
+<a href="/up">Update User</a>
+
+<h1>Users Data base</h1>
+<table>
+    <tr>
+        <th class="column">ID</th>
+        <th class="column">Name</th>
+        <th class="column">Lastname</th>
+        <th class="column">Email</th>
+        <th class="column">Delete</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td class="column" th:text="${user.id}">ID</td>
+        <td class="column" th:text="${user.name}">Name</td>
+        <td class="column" th:text="${user.lastName}">LastName</td>
+        <td class="column" th:text="${user.email}">Email</td>
+        <td>
+            <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+
