@@ -15,9 +15,15 @@
     </style>
 </head>
 <body>
-<h1>Main Page</h1>
-<a href="/add">Add User</a>
-<a href="/up">Update User</a>
+<h1>Add User</h1>
+<form th:action="@{/add}" method="post">
+    <button type="submit">Add User</button>
+</form>
+
+<h1>Update User</h1>
+<form th:action="@{/up}" method="post">
+    <button type="submit">Update User</button>
+</form>
 
 <h1>Users Data base</h1>
 <table>
@@ -40,4 +46,3 @@
 </table>
 </body>
 </html>
-

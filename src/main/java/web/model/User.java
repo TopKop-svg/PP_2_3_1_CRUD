@@ -3,6 +3,8 @@ package web.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="users")
@@ -13,12 +15,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name", nullable = false, length = 20)
+    @NotBlank(message = "Name is required")
     private String name;
 
     @Column(name = "last_name", nullable = false, length = 20)
+    @NotBlank(message = "Last name is required")
     private String lastName;
 
     @Column(name = "email", nullable = false, length = 20)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be a valid email address")
     private String email;
 
     public User() {}

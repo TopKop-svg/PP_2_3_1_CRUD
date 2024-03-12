@@ -6,12 +6,19 @@
 </head>
 <body>
 <h1>Update User</h1>
-<form th:action="@{/up}" method="post">
-    <input type="text" name="id" th:placeholder="ID"/>
-    <input type="text" name="name" th:placeholder="Name"/>
-    <input type="text" name="lastname" placeholder="Lastname"/>
-    <input type="text" name="email" placeholder="Email"/>
-    <button type="submit">Update User</button>
+<form th:method="POST" th:action="@{/users/up/{id}/(id=${user.getId()})}" th:object="${user}">
+    <label for="id">Your id: </label>
+    <p id="id" th:text="${user.getId()}">id</p>
+    <input type="text"  id="name" th:placeholder="${name}" th:value="${name}"/>
+    <br/>
+    <input type="text"  id="lastname" th:placeholder="${lastname}" th:value="${lastname}"/>
+    <br/>
+    <input type="text"id="email" th:placeholder="${email}" th:value="${email}"/>
+    <br/>
+    <button th:method="POST" th:action="@{/users}" type="submit">Update</button>
+</form>
+<form th:method="POST" th:action="@{/}">
+    <button type="submit">go back</button>
 </form>
 </body>
 </html>

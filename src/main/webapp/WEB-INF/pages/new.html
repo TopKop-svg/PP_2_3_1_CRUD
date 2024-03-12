@@ -16,19 +16,19 @@
 </head>
 <body>
 <h1>Add User</h1>
-<form th:action="@{/add}" method="post">
-    <input type="text" name="name" th:placeholder="Name"/>
+<form th:action="@{/create}" method="get">
+    <!--<input type="text" name="name" th:placeholder="Name"/>
     <input type="text" name="lastname" placeholder="Lastname"/>
-    <input type="text" name="email" placeholder="Email"/>
+    <input type="text" name="email" placeholder="Email"/>-->
     <button th:action="@{/add}" method="post" type="submit">Add User</button>
 </form>
-<form th:action="@{/up}" method="post">
+<!--<form th:action="@{/up}" method="post">
     <input type="text" name="id" th:placeholder="id"/>
     <input type="text" name="name" th:placeholder="Name"/>
     <input type="text" name="lastname" placeholder="Lastname"/>
     <input type="text" name="email" placeholder="Email"/>
     <button th:action="@{/up}" method="post" type="submit">Update User</button>
-</form>
+</form>-->
 <h1>Users Data base</h1>
 <table>
     <tr>
@@ -37,6 +37,7 @@
         <th class="column">Lastname</th>
         <th class="column">Email</th>
         <th class="column">Delete</th>
+        <th class="column">Update</th>
     </tr>
     <tr th:each="user : ${users}">
         <td class="column" th:text="${user.id}">ID</td>
@@ -45,6 +46,11 @@
         <td class="column" th:text="${user.email}">Email</td>
         <td>
             <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
+        </td>
+        <td>
+            <form th:action="@{/up/{id}(id=${user.id})}" method="post">
+                <button type="submit">Update User</button>
+            </form>
         </td>
     </tr>
 </table>
