@@ -6,18 +6,19 @@
 </head>
 <body>
 <h1>Update User</h1>
-<form th:method="POST" th:action="@{/users/up/{id}/(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/{id}/(id=${user.getId()})}" th:object="${user}">
     <label for="id">Your id: </label>
     <p id="id" th:text="${user.getId()}">id</p>
-    <input type="text"  id="name" th:placeholder="${name}" th:value="${name}"/>
     <br/>
-    <input type="text"  id="lastname" th:placeholder="${lastname}" th:value="${lastname}"/>
+    <input type="text" name="name"  th:id="name" th:placeholder="${name}" th:value="${user.getName()}"/>
     <br/>
-    <input type="text"id="email" th:placeholder="${email}" th:value="${email}"/>
+    <input type="text" name="lastname" th:id="lastname" th:placeholder="${lastname}" th:value="${lastname}"/>
     <br/>
-    <button th:method="POST" th:action="@{/users}" type="submit">Update</button>
+    <input type="text" name="email" th:id="email" th:placeholder="${email}" th:value="${email}"/>
+    <br/>
+    <button type="submit">Update</button>
 </form>
-<form th:method="POST" th:action="@{/}">
+<form th:method="GET" th:action="@{/}">
     <button type="submit">go back</button>
 </form>
 </body>

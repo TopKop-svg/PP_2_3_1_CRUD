@@ -20,7 +20,7 @@
     <!--<input type="text" name="name" th:placeholder="Name"/>
     <input type="text" name="lastname" placeholder="Lastname"/>
     <input type="text" name="email" placeholder="Email"/>-->
-    <button th:action="@{/add}" method="post" type="submit">Add User</button>
+    <button  type="submit">Add User</button>
 </form>
 <!--<form th:action="@{/up}" method="post">
     <input type="text" name="id" th:placeholder="id"/>
@@ -48,9 +48,7 @@
             <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
         </td>
         <td>
-            <form th:action="@{/up/{id}(id=${user.id})}" method="post">
-                <button type="submit">Update User</button>
-            </form>
+            <a th:href="@{/{id}/update(id=${user.getId()})}">Edit</a>
         </td>
     </tr>
 </table>

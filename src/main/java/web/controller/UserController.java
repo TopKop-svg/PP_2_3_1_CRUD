@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-//@RequestMapping("/users")
+//@RequestMapping("/new")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -37,6 +37,11 @@ public class UserController {
     public String create(Model model) {
         return "add";
     }
+
+    /*@GetMapping("/up")
+    public String createUpdate(Model model) {
+        return "update";
+    }*/
 
    @PostMapping("/add")
     public String addUser(@RequestParam String name, @RequestParam String lastname
@@ -62,17 +67,30 @@ public class UserController {
         model.addAttribute("users", userRepository.findAll());
         return "new";
     }*/
-    @PostMapping("/up/{id}")
-    public String upUser(@Valid @ModelAttribute("user") User user, @PathVariable("id") Long id, Model model) {
-        User userToUpdate = userRepository.findById(id).orElseThrow(()
+    @GetMapping("{id}/update")
+    public String upUser(@ModelAttribute("user") @Valid User userToUpdate, @PathVariable("id") Long id, Model model) {
+        User user = userRepository.findById(id).orElseThrow(()
                 -> new EntityNotFoundException("User not found with id " + id));
         userToUpdate.setId(id);
-        model.addAttribute("name", userToUpdate.getName());
-        model.addAttribute("lastname", userToUpdate.getLastName());
-        model.addAttribute("email", userToUpdate.getEmail());
-        model.addAttribute("users", userRepository.findAll());
-        userRepository.save(userToUpdate);
-        return "update";
+        model.addAttribute("name", user.getName());
+        model.addAttribute("lastname", user.getLastName());
+        model.addAttribute("email", user.getEmail());
+        //model.addAttribute("users", userRepository.findAll());
+        //userRepository.save(userToUpdate);
+        return "/update";
+    }
+
+    @PostMapping("/{id}")
+    public String edit(@PathVariable("id") Long id, @ModelAttribute("name") String name,
+                       @ModelAttribute("lastname") String lastname, @ModelAttribute("email") String email) {
+        User newUser = userRepository.findById(id).orElseThrow(()
+                -> new EntityNotFoundException("User not found with id " + id));
+        newUser.setId(id);
+        newUser.setName(name);
+        newUser.setLastName(lastname);
+        newUser.setEmail(email);
+        userRepository.save(newUser);
+        return "redirect:/";
     }
 
     @GetMapping("/users/{id}/delete")

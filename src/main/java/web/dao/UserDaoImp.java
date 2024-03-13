@@ -26,6 +26,13 @@ public class UserDaoImp implements UserDao {
     public User getUser(int id) {
         return entityManager.find(User.class, id);
     }
+    @Override
+    public void updateUser(int id, User updateUser) {
+        User user = entityManager.find(User.class, id);
+        entityManager.merge(updateUser);
+    }
+
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -33,6 +40,8 @@ public class UserDaoImp implements UserDao {
         TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u", User.class);
         return query.getResultList();
     }
+
+
 
 
 }
