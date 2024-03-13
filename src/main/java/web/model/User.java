@@ -14,11 +14,11 @@ public class User {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", nullable = false, length = 20)
+    @Column(name = "name", nullable = false, length = 20, unique = false)
     @NotBlank(message = "Name is required")
     private String name;
 
-    @Column(name = "last_name", nullable = false, length = 20)
+    @Column(name = "last_name", nullable = false, length = 20, unique = false)
     @NotBlank(message = "Last name is required")
     private String lastName;
 

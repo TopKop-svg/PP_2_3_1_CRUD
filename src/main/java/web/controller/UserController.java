@@ -55,18 +55,6 @@ public class UserController {
         return "new";
     }
 
-    /*@PostMapping("/up/{id}")
-    public String upUser(@RequestParam Long id, @RequestParam String name, @RequestParam String lastname
-            , @RequestParam String email, Model model) {
-        User user = new User();
-        user.setId(id);
-        user.setName(name);
-        user.setLastName(lastname);
-        user.setEmail(email);
-        userRepository.save(user);
-        model.addAttribute("users", userRepository.findAll());
-        return "new";
-    }*/
     @GetMapping("{id}/update")
     public String upUser(@ModelAttribute("user") @Valid User userToUpdate, @PathVariable("id") Long id, Model model) {
         User user = userRepository.findById(id).orElseThrow(()
@@ -75,14 +63,16 @@ public class UserController {
         model.addAttribute("name", user.getName());
         model.addAttribute("lastname", user.getLastName());
         model.addAttribute("email", user.getEmail());
-        //model.addAttribute("users", userRepository.findAll());
-        //userRepository.save(userToUpdate);
         return "/update";
     }
 
     @PostMapping("/{id}")
     public String edit(@PathVariable("id") Long id, @ModelAttribute("name") String name,
-                       @ModelAttribute("lastname") String lastname, @ModelAttribute("email") String email) {
+                       @ModelAttribute("lastname") String lastname,@ModelAttribute("email") @Valid String email,
+                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/" + id;
+        }
         User newUser = userRepository.findById(id).orElseThrow(()
                 -> new EntityNotFoundException("User not found with id " + id));
         newUser.setId(id);

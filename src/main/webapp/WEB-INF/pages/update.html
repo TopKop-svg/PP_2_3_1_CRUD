@@ -10,11 +10,12 @@
     <label for="id">Your id: </label>
     <p id="id" th:text="${user.getId()}">id</p>
     <br/>
-    <input type="text" name="name"  th:id="name" th:placeholder="${name}" th:value="${user.getName()}"/>
+    <input type="text" name="name"  th:id="name" th:value="${name}"/>
     <br/>
-    <input type="text" name="lastname" th:id="lastname" th:placeholder="${lastname}" th:value="${lastname}"/>
+    <input type="text" name="lastname" th:id="lastname" th:value="${lastname}"/>
     <br/>
-    <input type="text" name="email" th:id="email" th:placeholder="${email}" th:value="${email}"/>
+    <input type="text" name="email" th:id="email" th:value="${email}" th:errorclass="error"/>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     <br/>
     <button type="submit">Update</button>
 </form>
