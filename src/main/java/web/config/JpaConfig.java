@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @ComponentScan("web")
 @EnableJpaRepositories(basePackages = "web.repository")
 public class JpaConfig {
-
+    //TODO сделать через проперти
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
