@@ -69,11 +69,5 @@ public class BaseConfig {
         return dataSource;
     }
 
-    @Bean
-    public PlatformTransactionManager platformTransactionManager() {
-        JpaTransactionManager manager = new JpaTransactionManager();
-        manager.setEntityManagerFactory(entityManagerFactory().getObject());
-        return manager;
-    }
 
 }

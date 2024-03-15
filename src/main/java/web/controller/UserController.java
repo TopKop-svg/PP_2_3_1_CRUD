@@ -8,40 +8,33 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import web.model.User;
-import web.repository.UserRepository;
-
-
+import web.service.UserService;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
-//@RequestMapping("/new")
 public class UserController {
-    private final UserRepository userRepository;
 
+    private final UserService userService;
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/")
     public String userTable(Model model) {
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.index();
         model.addAttribute("users", users);
         return "new";
     }
+
     @GetMapping("/create")
-    public String create(Model model) {
+    public String create() {
         return "add";
     }
 
-    /*@GetMapping("/up")
-    public String createUpdate(Model model) {
-        return "update";
-    }*/
 
    @PostMapping("/add")
     public String addUser(@RequestParam String name, @RequestParam String lastname
@@ -50,16 +43,14 @@ public class UserController {
         user.setName(name);
         user.setLastName(lastname);
         user.setEmail(email);
-        userRepository.save(user);
-        model.addAttribute("users", userRepository.findAll());
+        userService.save(user);
+        model.addAttribute("users", userService.index());
         return "new";
     }
 
     @GetMapping("{id}/update")
     public String upUser(@ModelAttribute("user") @Valid User userToUpdate, @PathVariable("id") Long id, Model model) {
-        User user = userRepository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("User not found with id " + id));
-        userToUpdate.setId(id);
+        User user = userService.show(id);
         model.addAttribute("name", user.getName());
         model.addAttribute("lastname", user.getLastName());
         model.addAttribute("email", user.getEmail());
@@ -73,20 +64,19 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "/" + id;
         }
-        User newUser = userRepository.findById(id).orElseThrow(()
-                -> new EntityNotFoundException("User not found with id " + id));
-        newUser.setId(id);
-        newUser.setName(name);
-        newUser.setLastName(lastname);
-        newUser.setEmail(email);
-        userRepository.save(newUser);
+        User user = userService.show(id);
+        user.setId(id);
+        user.setName(name);
+        user.setLastName(lastname);
+        user.setEmail(email);
+        userService.update(id, user);
         return "redirect:/";
     }
 
     @GetMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable Long id, Model model) {
-        userRepository.deleteById(id);
-        List<User> users = userRepository.findAll();
+        userService.delete(id);
+        List<User> users = userService.index();
         model.addAttribute("users", users);
         return "new";
     }

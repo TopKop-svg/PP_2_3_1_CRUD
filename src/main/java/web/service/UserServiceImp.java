@@ -9,18 +9,40 @@ import web.model.User;
 import java.util.List;
 @Service
 public class UserServiceImp implements UserService{
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    @Transactional
-    @Override
-    public void add(User user) {
-        userDao.add(user);
+    @Autowired
+    public UserServiceImp(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public List<User> listUsers() {
-        return userDao.listUsers();
+    @Transactional(readOnly = true)
+    public List<User> index() {
+        return userDao.index();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User show(long id) {
+        return userDao.show(id);
+    }
+
+    @Override
+    @Transactional
+    public void save(User user) {
+        userDao.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void update(long id, User updateUser) {
+        userDao.update(id, updateUser);
+    }
+
+    @Override
+    @Transactional
+    public void delete(long id) {
+        userDao.delete(id);
     }
 }
