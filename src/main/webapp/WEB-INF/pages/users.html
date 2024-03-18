@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>AllBase</title>
@@ -16,14 +16,6 @@
 </head>
 <body>
 <h1>Add User</h1>
-<form th:action="@{/add}" method="post">
-    <button type="submit">Add User</button>
-</form>
-
-<h1>Update User</h1>
-<form th:action="@{/up}" method="post">
-    <button type="submit">Update User</button>
-</form>
 
 <h1>Users Data base</h1>
 <table>
@@ -33,6 +25,7 @@
         <th class="column">Lastname</th>
         <th class="column">Email</th>
         <th class="column">Delete</th>
+        <th class="column">Edit</th>
     </tr>
     <tr th:each="user : ${users}">
         <td class="column" th:text="${user.id}">ID</td>
@@ -42,7 +35,15 @@
         <td>
             <a th:href="@{/users/{id}/delete(id=${user.id})}">Delete</a>
         </td>
+        <td>
+            <form th:method="GET" th:action="@{${user.getId()}+'/edit'}" th:object="${user}">
+                <input type="submit" value="EDIT"/>
+            </form>
+        </td>
     </tr>
 </table>
+<form th:method="GET" th:action="@{/new}">
+    <input type="submit" value="Add user">
+</form>
 </body>
 </html>
